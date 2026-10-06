@@ -85,13 +85,23 @@ h1{font-size:clamp(25px,4vw,34px);font-weight:400;margin:0 0 28px}
  .install-area{margin-top:54px}
  .disclaimer{margin-top:44px}
 }
+
+.header-art{
+  display:block;
+  width:min(96%,760px);
+  height:auto;
+  margin:0 auto;
+}
+@media(min-width:1100px){
+  .page{width:min(760px,100%)}
+}
+
 </style>
 </head>
 <body>
 <main class="page">
   <header class="banner" aria-label="Glastonbury Countdown">
-    <div class="glasto glastonbury" aria-hidden="true"><span>G</span><span>L</span><span>A</span><span>S</span><span>T</span><span>O</span><span>N</span><span>B</span><span>U</span><span>R</span><span>Y</span></div>
-    <div class="countdown-title">COUNTDOWN<span class="star">*</span></div>
+    <img class="header-art" src="/assets/glastonbury-countdown-header.png" alt="Glastonbury Countdown">
   </header>
 
   <section class="queue-section">
