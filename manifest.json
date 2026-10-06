@@ -1,8 +1,32 @@
 {
+  "id": "/",
   "name": "Glastonbury Queue Countdown",
   "short_name": "Glasto Queue",
-  "start_url": "./",
+  "description": "Countdown to Glastonbury Festival 2027.",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#dcdcdc",
-  "theme_color": "#dcdcdc"
+  "theme_color": "#19164b",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
 }
