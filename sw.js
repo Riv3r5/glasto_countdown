@@ -1,4 +1,4 @@
-const CACHE='glasto-pwa-v7-60blocks';
+const CACHE='glasto-pwa-v12-final';
 const FILES=[
   '/',
   '/index.html',

@@ -3,98 +3,163 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#19164b">
+<meta name="theme-color" content="#dcdcdc">
+<meta name="robots" content="noindex,nofollow">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/assets/icon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="/assets/icon-192.png">
-<title>Glastonbury Queue</title>
+<title>Glastonbury Countdown</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:#303030}
-body{background:#dcdcdc;padding:42px 18px}
+body{background:#dcdcdc;padding:24px 18px 18px}
 .page{width:min(820px,100%);margin:auto}
-.banner{width:100%;background:#19164b;border-radius:4px;padding:26px 30px;display:flex;justify-content:center}
-.banner img{display:block;width:min(100%,700px);height:auto}
-h1{font-size:clamp(25px,4vw,34px);font-weight:400;margin:30px 0 38px}
+
+.banner{
+  width:100%;background:#071334;border-radius:3px;
+  padding:18px 24px 14px;text-align:center;overflow:hidden
+}
+.glasto{
+  display:grid;grid-template-columns:repeat(6,1fr);align-items:center;
+  width:84%;margin:0 auto;
+  font-family:Impact,"Arial Narrow",Arial,sans-serif;
+  font-stretch:condensed;font-size:clamp(66px,13.2vw,118px);
+  line-height:.84;letter-spacing:0
+}
+.glasto span{display:block;text-align:center}
+.glasto span:nth-child(1){color:#08abe0}
+.glasto span:nth-child(2){color:#ff6427}
+.glasto span:nth-child(3){color:#ef66a8}
+.glasto span:nth-child(4){color:#ffd321}
+.glasto span:nth-child(5){color:#05a75a}
+.glasto span:nth-child(6){color:#ff1838}
+.glasto span:nth-child(7){color:#ef66a8}
+.glasto span:nth-child(8){color:#ff6427}
+.glasto span:nth-child(9){color:#ffd321}
+.glasto span:nth-child(10){color:#05a75a}
+.glasto span:nth-child(11){color:#08abe0}
+.glastonbury{
+  width:96%;
+  grid-template-columns:repeat(11,1fr);
+  font-size:clamp(42px,8.6vw,78px);
+  letter-spacing:0;
+}
+
+.countdown-title{
+  color:#fff7e6;font-family:"Arial Narrow",Arial,sans-serif;font-weight:600;
+  font-size:clamp(30px,6.2vw,53px);line-height:1;letter-spacing:.08em;
+  white-space:nowrap;margin-top:4px
+}
+.star{font-family:Arial,Helvetica,sans-serif;font-size:.42em;vertical-align:top;margin-left:8px}
+
+h1{font-size:clamp(25px,4vw,34px);font-weight:400;margin:0 0 28px}
+.queue-section{margin-top:58px;padding:0 0 12px}
 .queue{height:46px;background:#4b4d52;border:4px solid #4b4d52;display:grid;grid-template-columns:repeat(60,1fr);gap:2px}
 .cell{position:relative;overflow:hidden;background:#4b4d52}
 .fill{position:absolute;left:0;top:0;bottom:0;width:0;background:#54b982}
-.count{text-align:center;margin-top:50px}
+.count{text-align:center;margin-top:40px}
 .days{font-size:clamp(84px,19vw,140px);font-weight:700;line-height:.82;color:#222}
 .label{font-size:clamp(20px,4vw,28px);font-weight:700;letter-spacing:4px;margin-top:18px}
 
-.install-area{text-align:right;margin-top:72px}
+.install-area{text-align:right;margin-top:58px}
 .install-btn{
-  appearance:none;border:0;background:#222;color:#fff;border-radius:999px;
-  padding:15px 24px;font:700 14px Arial,Helvetica,sans-serif;
-  letter-spacing:.4px;cursor:pointer
+ appearance:none;border:0;background:#222;color:#fff;border-radius:999px;
+ padding:13px 22px;font:700 12px Arial,Helvetica,sans-serif;
+ letter-spacing:.35px;cursor:pointer
 }
 .install-btn:hover{background:#383838}
-.install-help{display:none;margin:14px 0 0 auto;max-width:430px;font-size:13px;line-height:1.45;color:#666;text-align:right}
+.install-help{display:none;margin:12px 0 0 auto;max-width:430px;font-size:13px;line-height:1.45;color:#666;text-align:right}
 .install-help.show{display:block}
+.disclaimer{margin:54px 6px 0;font-size:11px;line-height:1.65;color:#444}
+.disclaimer .mark{font-weight:700;margin-right:5px}
 
 @media(max-width:600px){
- body{padding:18px 12px}
- .banner{padding:18px 16px}
- h1{margin:22px 0 28px}
+ body{padding:14px 12px}
+ .banner{padding:16px 12px 12px}
+ .glasto{letter-spacing:-1px}
+ .countdown-title{letter-spacing:-.5px}
+ h1{margin:20px 0 24px}
+ .queue-section{margin-top:44px}
  .queue{height:38px}
- .count{margin-top:40px}
+ .count{margin-top:36px}
+ .install-area{margin-top:54px}
+ .disclaimer{margin-top:44px}
 }
 </style>
 </head>
 <body>
 <main class="page">
-<div class="banner"><img src="assets/glastonbury-logo.png" alt="Glastonbury Festival of Contemporary Performing Arts"></div>
-<h1>You are now in the queue!</h1>
-<div class="queue" id="queue"></div>
-<div class="count">
- <div class="days" id="days">---</div>
- <div class="label">DAYS TO GO</div>
-</div>
-<div class="install-area" id="installArea">
-  <button class="install-btn" id="installBtn">INSTALL THE COUNTDOWN</button>
-  <div class="install-help" id="installHelp"></div>
-</div>
+  <header class="banner" aria-label="Glastonbury Countdown">
+    <div class="glasto glastonbury" aria-hidden="true"><span>G</span><span>L</span><span>A</span><span>S</span><span>T</span><span>O</span><span>N</span><span>B</span><span>U</span><span>R</span><span>Y</span></div>
+    <div class="countdown-title">COUNTDOWN<span class="star">*</span></div>
+  </header>
+
+  <section class="queue-section">
+    <h1>You are now in the queue!</h1>
+    <div class="queue" id="queue" aria-label="Countdown queue progress"></div>
+
+    <div class="count">
+      <div class="days" id="days" title="Countdown to Wednesday 23 June 2027">---</div>
+      <div class="label">DAYS TO GO</div>
+    </div>
+  </section>
+
+  <div class="install-area" id="installArea">
+    <button class="install-btn" id="installBtn">INSTALL THE COUNTDOWN</button>
+    <div class="install-help" id="installHelp"></div>
+  </div>
+
+  <div class="disclaimer"><div><span class="mark">*</span>Unofficial fan-made countdown.</div><div>Not affiliated with or endorsed by Glastonbury Festival.</div></div>
 </main>
+
 <script>
-const START=new Date("2026-10-04T00:00:00");
-const FINISH=new Date("2027-06-23T00:00:00");
-const BLOCKS=60,STARTING_BLOCKS=2,SUBDIVISIONS=10;
-const now=new Date(),total=FINISH-START;
-const elapsed=Math.max(0,Math.min(total,now-START));
-const progress=total>0?elapsed/total:1;
-const exact=STARTING_BLOCKS+progress*(BLOCKS-STARTING_BLOCKS);
-const snapped=Math.floor(exact*SUBDIVISIONS)/SUBDIVISIONS;
-const q=document.getElementById("queue");
-for(let i=0;i<BLOCKS;i++){
- const c=document.createElement("div");c.className="cell";
- const f=document.createElement("div");f.className="fill";
- f.style.width=Math.max(0,Math.min(1,snapped-i))*100+"%";
- c.appendChild(f);q.appendChild(c);
-}
-const left=Math.max(0,Math.ceil((FINISH-now)/86400000));
-document.getElementById("days").textContent=left;
-if(now>=FINISH)document.querySelector("h1").textContent="You're in!";
-if("serviceWorker"in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js");
+const START = new Date(2026, 9, 4);   // 4 Oct 2026, local midnight
+const FINISH = new Date(2027, 5, 23); // 23 Jun 2027, local midnight
+const BLOCKS=60, STARTING_BLOCKS=2, SUBDIVISIONS=10;
 
-let deferredInstallPrompt = null;
-const installArea = document.getElementById("installArea");
-const installBtn = document.getElementById("installBtn");
-const installHelp = document.getElementById("installHelp");
+function localDayNumber(d){
+  return Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000;
+}
 
-function isIOS(){
-  return /iphone|ipad|ipod/i.test(navigator.userAgent);
+function render(){
+  const now=new Date();
+
+  // Calendar-day countdown: avoids the number changing part-way through a day.
+  const daysLeft=Math.max(0,localDayNumber(FINISH)-localDayNumber(now));
+  document.getElementById("days").textContent=daysLeft;
+
+  const totalDays=localDayNumber(FINISH)-localDayNumber(START);
+  const elapsedDays=Math.max(0,Math.min(totalDays,localDayNumber(now)-localDayNumber(START)));
+  const progress=totalDays>0?elapsedDays/totalDays:1;
+  const exact=STARTING_BLOCKS+progress*(BLOCKS-STARTING_BLOCKS);
+  const snapped=Math.floor(exact*SUBDIVISIONS)/SUBDIVISIONS;
+
+  const q=document.getElementById("queue");
+  q.innerHTML="";
+  for(let i=0;i<BLOCKS;i++){
+    const c=document.createElement("div"); c.className="cell";
+    const f=document.createElement("div"); f.className="fill";
+    f.style.width=Math.max(0,Math.min(1,snapped-i))*100+"%";
+    c.appendChild(f); q.appendChild(c);
+  }
+  if(daysLeft===0) document.querySelector("h1").textContent="You're in!";
 }
-function isStandalone(){
-  return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+render();
+
+if("serviceWorker" in navigator && location.protocol.startsWith("http")){
+  navigator.serviceWorker.register("./sw.js");
 }
-if(isStandalone()){
-  installArea.style.display="none";
-}
-window.addEventListener("beforeinstallprompt",(e)=>{
-  e.preventDefault();
-  deferredInstallPrompt=e;
-});
+
+let deferredInstallPrompt=null;
+const installArea=document.getElementById("installArea");
+const installBtn=document.getElementById("installBtn");
+const installHelp=document.getElementById("installHelp");
+
+function isIOS(){return /iphone|ipad|ipod/i.test(navigator.userAgent)}
+function isStandalone(){return matchMedia("(display-mode: standalone)").matches || navigator.standalone===true}
+if(isStandalone()) installArea.style.display="none";
+
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstallPrompt=e});
 installBtn.addEventListener("click",async()=>{
   installHelp.classList.remove("show");
   if(deferredInstallPrompt){
@@ -103,15 +168,12 @@ installBtn.addEventListener("click",async()=>{
     deferredInstallPrompt=null;
     return;
   }
-  if(isIOS()){
-    installHelp.innerHTML="On iPhone: tap <b>Share</b>, then <b>Add to Home Screen</b>, then <b>Add</b>.";
-  }else{
-    installHelp.innerHTML="Open your browser menu and choose <b>Install</b> or <b>Add to Home screen</b>.";
-  }
+  installHelp.innerHTML=isIOS()
+    ?"On iPhone: tap <b>Share</b>, then <b>Add to Home Screen</b>, then <b>Add</b>."
+    :"Open your browser menu and choose <b>Install</b> or <b>Add to Home screen</b>.";
   installHelp.classList.add("show");
 });
-window.addEventListener("appinstalled",()=>{ installArea.style.display="none"; });
-
+addEventListener("appinstalled",()=>{installArea.style.display="none"});
 </script>
 </body>
 </html>
