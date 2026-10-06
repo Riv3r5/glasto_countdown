@@ -16,17 +16,28 @@ body{background:#dcdcdc;padding:42px 18px}
 .banner{width:100%;background:#19164b;border-radius:4px;padding:26px 30px;display:flex;justify-content:center}
 .banner img{display:block;width:min(100%,700px);height:auto}
 h1{font-size:clamp(25px,4vw,34px);font-weight:400;margin:30px 0 38px}
-.queue{height:42px;background:#4b4d52;border:4px solid #4b4d52;display:grid;grid-template-columns:repeat(20,1fr);gap:2px}
+.queue{height:46px;background:#4b4d52;border:4px solid #4b4d52;display:grid;grid-template-columns:repeat(60,1fr);gap:2px}
 .cell{position:relative;overflow:hidden;background:#4b4d52}
 .fill{position:absolute;left:0;top:0;bottom:0;width:0;background:#54b982}
 .count{text-align:center;margin-top:50px}
 .days{font-size:clamp(84px,19vw,140px);font-weight:700;line-height:.82;color:#222}
 .label{font-size:clamp(20px,4vw,28px);font-weight:700;letter-spacing:4px;margin-top:18px}
+
+.install-area{text-align:right;margin-top:72px}
+.install-btn{
+  appearance:none;border:0;background:#222;color:#fff;border-radius:999px;
+  padding:15px 24px;font:700 14px Arial,Helvetica,sans-serif;
+  letter-spacing:.4px;cursor:pointer
+}
+.install-btn:hover{background:#383838}
+.install-help{display:none;margin:14px 0 0 auto;max-width:430px;font-size:13px;line-height:1.45;color:#666;text-align:right}
+.install-help.show{display:block}
+
 @media(max-width:600px){
  body{padding:18px 12px}
  .banner{padding:18px 16px}
  h1{margin:22px 0 28px}
- .queue{height:34px}
+ .queue{height:38px}
  .count{margin-top:40px}
 }
 </style>
@@ -40,11 +51,15 @@ h1{font-size:clamp(25px,4vw,34px);font-weight:400;margin:30px 0 38px}
  <div class="days" id="days">---</div>
  <div class="label">DAYS TO GO</div>
 </div>
+<div class="install-area" id="installArea">
+  <button class="install-btn" id="installBtn">INSTALL THE COUNTDOWN</button>
+  <div class="install-help" id="installHelp"></div>
+</div>
 </main>
 <script>
 const START=new Date("2026-10-04T00:00:00");
 const FINISH=new Date("2027-06-23T00:00:00");
-const BLOCKS=20,STARTING_BLOCKS=2,SUBDIVISIONS=10;
+const BLOCKS=60,STARTING_BLOCKS=2,SUBDIVISIONS=10;
 const now=new Date(),total=FINISH-START;
 const elapsed=Math.max(0,Math.min(total,now-START));
 const progress=total>0?elapsed/total:1;
@@ -61,6 +76,42 @@ const left=Math.max(0,Math.ceil((FINISH-now)/86400000));
 document.getElementById("days").textContent=left;
 if(now>=FINISH)document.querySelector("h1").textContent="You're in!";
 if("serviceWorker"in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js");
+
+let deferredInstallPrompt = null;
+const installArea = document.getElementById("installArea");
+const installBtn = document.getElementById("installBtn");
+const installHelp = document.getElementById("installHelp");
+
+function isIOS(){
+  return /iphone|ipad|ipod/i.test(navigator.userAgent);
+}
+function isStandalone(){
+  return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+}
+if(isStandalone()){
+  installArea.style.display="none";
+}
+window.addEventListener("beforeinstallprompt",(e)=>{
+  e.preventDefault();
+  deferredInstallPrompt=e;
+});
+installBtn.addEventListener("click",async()=>{
+  installHelp.classList.remove("show");
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt=null;
+    return;
+  }
+  if(isIOS()){
+    installHelp.innerHTML="On iPhone: tap <b>Share</b>, then <b>Add to Home Screen</b>, then <b>Add</b>.";
+  }else{
+    installHelp.innerHTML="Open your browser menu and choose <b>Install</b> or <b>Add to Home screen</b>.";
+  }
+  installHelp.classList.add("show");
+});
+window.addEventListener("appinstalled",()=>{ installArea.style.display="none"; });
+
 </script>
 </body>
 </html>
