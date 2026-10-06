@@ -1,0 +1,8 @@
+{
+  "name": "Glastonbury Queue Countdown",
+  "short_name": "Glasto Queue",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#dcdcdc",
+  "theme_color": "#dcdcdc"
+}
